@@ -1,8 +1,8 @@
-import { faker } from '@faker-js/faker/locale/pt_BR';
-import { lodash } from 'lodash';
+import { faker }  from '@faker-js/faker/locale/pt_BR';
+import lodash from 'lodash';
 import fs from 'fs';
 
-const peoples = lodash.times(50, function(n){
+const profissionais = lodash.times(50, function(n){
     const firtName = faker.person.firstName();
     const lastName = faker.person.lastName();
     return {
@@ -10,17 +10,30 @@ const peoples = lodash.times(50, function(n){
         firtName: firtName,
         lastName: lastName,
         avatar: faker.image.avatar(),
+        profissao: faker.person.jobTitle(),
         address: faker.location.streetAddress(),
         email: faker.internet.email({ firstName: firtName.toLowerCase, lastName: lastName.toLowerCase }),   
     }
 });
 
-const data = {};
-data.peoples = peoples;
-fs.writeFile('db.json', JSON.stringify(data), (err) => {
-    if (err) {
-        console.error(err);
-        return;
+const usuarios = lodash.times(50, function(n){
+    const firtName = faker.person.firstName();
+    const lastName = faker.person.lastName();
+    return {
+        id: n+1000,
+        firtName: firtName,
+        lastName: lastName,
+        avatar: faker.image.avatar(),
+        address: faker.location.streetAddress(),
+        //deficiencia: faker.,
+        email: faker.internet.email({ firstName: firtName.toLowerCase, lastName: lastName.toLowerCase }),   
     }
-    console.log('Data written to file');
+});
+
+const data = {};
+data.profissionais = profissionais;
+data.usuarios = usuarios;
+fs.writeFile('db.json', JSON.stringify(data), (err) => {
+    if(err) throw err;
+    console.log('Finalizado...');
 });
